@@ -1,0 +1,22 @@
+server:
+  port: 9090
+spring:
+  ai:
+    deepseek:
+      api-key:
+      base-url: https://api.deepseek.com/v1
+      chat:
+        options:
+          model: deepseek-reasoner
+          temperature: 0.7
+
+    mcp:
+      client:
+        type: ASYNC
+        toolcallback:
+          enabled: true
+        request-timeout: 60s
+        sse:
+          connections:
+            amap-sse:
+              url: https://mcp.amap.com/sse?key=
