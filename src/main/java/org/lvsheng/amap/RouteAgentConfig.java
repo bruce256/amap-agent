@@ -23,15 +23,13 @@ import java.util.List;
  */
 @Configuration
 public class RouteAgentConfig {
-	
-	private final InMemoryChatMemoryRepository chatMemoryRepository = new InMemoryChatMemoryRepository();
-	
 	private final int MAX_MESSAGES = 100;
 	
-	private final MessageWindowChatMemory messageWindowChatMemory = MessageWindowChatMemory.builder()
-																						   .chatMemoryRepository(chatMemoryRepository)
-																						   .maxMessages(MAX_MESSAGES)
-																						   .build();
+	private final InMemoryChatMemoryRepository chatMemoryRepository    = new InMemoryChatMemoryRepository();
+	private final MessageWindowChatMemory      messageWindowChatMemory = MessageWindowChatMemory.builder()
+																								.chatMemoryRepository(chatMemoryRepository)
+																								.maxMessages(MAX_MESSAGES)
+																								.build();
 	
 	@Bean
 	public ChatClient routeAgent(DeepSeekChatModel deepseekModel, AsyncMcpToolCallbackProvider toolProvider) {

@@ -30,14 +30,14 @@ public class AmapAssistantController {
 	private ChatClient routeAgent;
 	
 	@GetMapping(value = "/completion"/*, produces = MediaType.TEXT_EVENT_STREAM_VALUE*/)
-	public Flux<String> reactCodeGeneration(@RequestParam String question,
+	public String reactCodeGeneration(@RequestParam String question,
 											@RequestParam(value = "conversation_id", defaultValue = "yingzi") String conversationId) {
 		return routeAgent.prompt()
 						 .user(question)
 						 .advisors(
 								 advisorSpec -> advisorSpec.param(CONVERSATION_ID, conversationId)
 						 )
-						 .stream()
+						 .call()
 						 .content();
 		
 	}
