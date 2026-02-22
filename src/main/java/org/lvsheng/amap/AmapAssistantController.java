@@ -5,7 +5,9 @@ import io.modelcontextprotocol.client.McpAsyncClient;
 import io.modelcontextprotocol.spec.McpSchema;
 import org.springframework.ai.chat.client.ChatClient;
 import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,17 +31,15 @@ public class AmapAssistantController {
 	@Autowired
 	private ChatClient routeAgent;
 	
-	@GetMapping(value = "/completion"/*, produces = MediaType.TEXT_EVENT_STREAM_VALUE*/)
-	public String reactCodeGeneration(@RequestParam String question,
-											@RequestParam(value = "conversation_id", defaultValue = "yingzi") String conversationId) {
+	@GetMapping(value = "/completion", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<String> reactCodeGeneration(@RequestParam String question,
+									  @RequestParam(value = "conversation_id", defaultValue = "yingzi") String conversationId) {
 		return routeAgent.prompt()
 						 .user(question)
 						 .advisors(
 								 advisorSpec -> advisorSpec.param(CONVERSATION_ID, conversationId)
 						 )
-						 .call()
-						 .content();
-		
+						 .stream().content();
 	}
 	
 	@Autowired

@@ -3,20 +3,21 @@ server:
 spring:
   ai:
     deepseek:
-      api-key:
+      api-key: sk-5f8c78c8f2574cc49814a0eb0deebcab
       base-url: https://api.deepseek.com/v1
       chat:
         options:
-          model: deepseek-reasoner
+          model: deepseek-chat
           temperature: 0.7
 
     mcp:
       client:
         type: ASYNC
-        toolcallback:
-          enabled: true
+#        toolcallback:
+#          enabled: true
         request-timeout: 60s
         sse:
           connections:
             amap-sse:
-              url: https://mcp.amap.com/sse?key=
+              url: https://mcp.amap.com
+              sseEndpoint: /sse?key=
